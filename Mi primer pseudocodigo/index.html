@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi portafolio web</title>
+</head>
+<body>
+    este es mi proyecto web 
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+  }
+
+  .calculadora {
+    background: #1e1e2e;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    width: 320px;
+  }
+
+  #pantalla {
+    width: 100%;
+    height: 70px;
+    background: #2a2a3e;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 2rem;
+    text-align: right;
+    padding: 0 15px;
+    margin-bottom: 15px;
+    outline: none;
+  }
+
+  .botones {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  button {
+    padding: 18px;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #3a3a52;
+    color: #fff;
+    transition: 0.2s;
+  }
+
+  button:hover { background: #4a4a68; transform: scale(1.05); }
+  button:active { transform: scale(0.95); }
+
+  .operador { background: #f39c12; }
+  .operador:hover { background: #e67e22; }
+
+  .igual {
+    background: #27ae60;
+    grid-row: span 2;
+  }
+  .igual:hover { background: #2ecc71; }
+
+  .limpiar { background: #e74c3c; }
+  .limpiar:hover { background: #c0392b; }
+</style>
+</head>
+<body>
+
+  <div class="calculadora">
+    <input type="text" id="pantalla" readonly value="0">
+    <div class="botones">
+      <button class="limpiar" onclick="limpiar()">C</button>
+      <button onclick="borrar()">⌫</button>
+      <button class="operador" onclick="agregar('/')">÷</button>
+      <button class="operador" onclick="agregar('*')">×</button>
+
+      <button onclick="agregar('7')">7</button>
+      <button onclick="agregar('8')">8</button>
+      <button onclick="agregar('9')">9</button>
+      <button class="operador" onclick="agregar('-')">−</button>
+
+      <button onclick="agregar('4')">4</button>
+      <button onclick="agregar('5')">5</button>
+      <button onclick="agregar('6')">6</button>
+      <button class="operador" onclick="agregar('+')">+</button>
+
+      <button onclick="agregar('1')">1</button>
+      <button onclick="agregar('2')">2</button>
+      <button onclick="agregar('3')">3</button>
+      <button class="igual" onclick="calcular()">=</button>
+
+      <button onclick="agregar('0')">0</button>
+      <button onclick="agregar('.')">.</button>
+    </div>
+  </div>
+
+<script>
+  const pantalla = document.getElementById('pantalla');
+
+  function agregar(valor) {
+    if (pantalla.value === '0' && valor !== '.') {
+      pantalla.value = valor;
+    } else {
+      pantalla.value += valor;
+    }
+  }
+
+  function limpiar() {
+    pantalla.value = '0';
+  }
+
+  function borrar() {
+    pantalla.value = pantalla.value.slice(0, -1) || '0';
+  }
+
+  function calcular() {
+    try {
+      // eval solo con números y operadores por seguridad básica
+      if (!/^[0-9+\-*/. ]+$/.test(pantalla.value)) {
+        pantalla.value = 'Error';
+        return;
+      }
+      pantalla.value = eval(pantalla.value);
+    } catch {
+      pantalla.value = 'Error';
+    }
+  }
+
+  // Soporte para teclado
+  document.addEventListener('keydown', (e) => {
+    if (/[0-9+\-*/.()]/.test(e.key)) agregar(e.key);
+    else if (e.key === 'Enter') calcular();
+    else if (e.key === 'Backspace') borrar();
+    else if (e.key === 'Escape') limpiar();
+  });
+</script>
+
+</body>
+</html>
